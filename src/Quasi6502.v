@@ -1,5 +1,5 @@
 
-module quasi6502
+module Quasi6502
    (input  wire         reset,
     output wire         ready,
     input  wire         clk,
