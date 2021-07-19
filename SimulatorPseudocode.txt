@@ -1,0 +1,101 @@
+
+class Design {
+
+
+    function recalcNodes(list) {
+        
+        recalcList = []
+        recalcHash = []
+
+        while (true) {
+            
+            if (list == [])
+                return
+
+            recalcList = []
+            recalcHash = []
+            for (n in list)
+                recalcNode(n, &recalcList, &recalcHash)
+
+            list == recalcList
+        }
+    }
+
+    function recalcNode(node) {
+        if (node == Vcc || node == Vss)
+            return
+
+        group = getNodeGroup(node)
+        newState = getNodeValue(group)
+
+        for (n in group) {
+            if (n.state == newState)
+                continue
+            
+            n.state = newState
+            for (t in n.connectedWithGates)
+                t.turnOnOff(newState)
+        }
+    }
+
+    function transistor.turnOnOff(newState) {
+        if (t.state == newState)
+            return
+        
+        if (newState == true)
+            addRecalcNode(t.c1)
+
+        addRecalcNode(t.c2)
+    }
+
+    function addRecalcNode(nn){
+       if(nn==ngnd) return;
+       if(nn==npwr) return;
+       if(recalcHash[nn] == 1)return; 
+       recalclist.push(nn);
+       recalcHash[nn] = 1;
+    }
+
+    function getNodeGroup(node) {
+        group = new()
+        group.add(node)
+    }
+
+    function group.add(node) {
+        if (group.contains(node))
+            return
+        
+        group.append(i)
+        if (i == Vcc || i == Vss)
+            return
+        
+        for (t in node.c1c2s) {
+            if (!t.on)
+                continue
+            
+            other = t.getOtherSideOf(node)
+            group.add(other)
+        }
+    }
+
+
+    function getNodeValue(group) pure {
+        if (group.contains(Vss))
+            return false
+
+        if (group.contains(Vcc))
+            return true
+
+        for (var n in group) {
+            if (n.pullup)   return true;
+            if (n.pulldown) return false;
+            if (n.state)    return true;
+        }
+
+    	return false;
+    }
+
+
+
+}
+

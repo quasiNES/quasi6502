@@ -1,0 +1,20 @@
+
+opcodeFetched
+    opcode === dataIn
+    r$opcode <= opcode
+    r$zeropage <= zeroPage
+    r$zeropageX <= zeropageX
+    pc <= pc + 1;
+    addr <= pc + 1;
+    
+operandFetched
+    ;
+    ;
+
+operandLsbFetched
+    ;
+    ;
+
+operandMsbFetched
+    ;
+    ;
